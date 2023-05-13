@@ -4,9 +4,10 @@ from app.model import PostSchema
 from app.model import PostSchema, UserSchema, UserLoginSchema, getComponent
 from app.auth.jwt_handler import signJWT
 from app.auth.jwt_bearer import jwtBearer
-
+import os
 import mysql.connector
 
+port = int(os.getenv("PORT"))
 
 posts = [
     {
@@ -254,4 +255,5 @@ def user_login(user: UserLoginSchema = Body(...)):
 
 
 
-
+if __name__ == '__main__':
+    uvicorn.run(app, host="0.0.0.0", port=port, timeout_keep_alive=1200)
