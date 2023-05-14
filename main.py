@@ -150,6 +150,25 @@ def getArticlebyId(compid):
   return articleList
 
 
+def getAllArticleby():
+  mycursor = mydb.cursor()
+  mycursor.execute("SELECT * FROM articles")
+  myresult = mycursor.fetchall()
+  articleList = []
+  for t in myresult:
+    artic = {
+      "id":t[0],
+      "name":t[1],
+      "desc":t[2],
+      "articleImageURL":t[3],
+      "componentId":t[4]
+    }
+    articleList.append(artic) 
+  return articleList
+
+
+
+
 
 # Get test
 @app.get("/", tags=["test"])
@@ -181,6 +200,16 @@ def get_one_post(id:int):
 @app.get("/component{id}", dependencies=[Depends(jwtBearer())], tags=["components"])
 def comps(name: str):
     result = getbyId(name)
+    return {
+        "error":"false",
+        "message":"success",
+        "componentList":result
+    }
+
+
+@app.get("/allComponent", dependencies=[Depends(jwtBearer())], tags=["components"])
+def comps():
+    result = getAllArticleby()
     return {
         "error":"false",
         "message":"success",
