@@ -152,7 +152,7 @@ def getArticlebyId(compid):
 
 def getAllArticleby():
   mycursor = mydb.cursor()
-  mycursor.execute("SELECT * FROM articles")
+  mycursor.execute("SELECT * FROM articles ORDER BY id DESC;")
   myresult = mycursor.fetchall()
   articleList = []
   for t in myresult:
