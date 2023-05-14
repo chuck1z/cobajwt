@@ -182,6 +182,8 @@ def get_one_post(id:int):
 def comps(name: str):
     result = getbyId(name)
     return {
+        "error":"false",
+        "message":"success",
         "componentList":result
     }
 
@@ -191,6 +193,8 @@ def comps(name: str):
 def comps(compid: str):
     result = getArticlebyId(compid)
     return {
+        "error":"false",
+        "message":"success",
         "articleList":result
     }
 
