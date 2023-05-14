@@ -4,10 +4,10 @@ from app.model import PostSchema
 from app.model import PostSchema, UserSchema, UserLoginSchema, getComponent
 from app.auth.jwt_handler import signJWT
 from app.auth.jwt_bearer import jwtBearer
-import os
+
 import mysql.connector
 
-port = int(os.getenv("PORT"))
+
 
 posts = [
     {
@@ -133,26 +133,22 @@ def getbyId(name):
 
 
 def getArticlebyId(compid):
-    mycursor = mydb.cursor()
-    
-    res=(compid,)
-    mycursor.execute("SELECT * FROM articles WHERE componentId= %s", res)
-    myresult = mycursor.fetchall()
-    id=myresult[0][0]
-    name=myresult[0][1]
-    desc=myresult[0][2]
-    imgurl=myresult[0][3]
-    compid=myresult[0][4]
-
-    humu={
-        "id":id,
-        "name":name,
-        "desc":desc,
-        "imgurl":imgurl,
-        "compid":compid,
+  mycursor = mydb.cursor()
+  res = (compid,)
+  mycursor.execute("SELECT * FROM articles WHERE componentId= %s", res)
+  myresult = mycursor.fetchall()
+  articleList = []
+  for t in myresult:
+    artic = {
+      "id":t[0],
+      "name":t[1],
+      "desc":t[2],
+      "articleImageURL":t[3],
+      "componentId":t[4]
     }
+    articleList.append(artic) 
+  return articleList
 
-    return humu
 
 
 # Get test
@@ -255,5 +251,3 @@ def user_login(user: UserLoginSchema = Body(...)):
 
 
 
-if __name__ == '__main__':
-    uvicorn.run(app, host="0.0.0.0", port=port, timeout_keep_alive=1200)
