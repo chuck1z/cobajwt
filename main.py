@@ -1,8 +1,8 @@
 import uvicorn
 from fastapi import FastAPI, Body, Depends
 from app.model import PostSchema
-from app.model import PostSchema, UserSchema, UserLoginSchema, getComponent
-from app.auth.jwt_handler import signJWT
+from app.model import PostSchema, UserSchema, UserLoginSchema, getComponent, test
+from app.auth.jwt_handler import signJWT, decodeJWT
 from app.auth.jwt_bearer import jwtBearer
 
 import mysql.connector
@@ -284,3 +284,8 @@ def user_login(user: UserLoginSchema = Body(...)):
 
 
 
+@app.post("/user/test", tags=["user"])
+def teste(user: test = Body(...)):
+    return {
+        "decoded":decodeJWT(user.token)
+    }

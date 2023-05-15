@@ -68,4 +68,13 @@ class getComponent(BaseModel):
         }
 
 
-    
+class test(BaseModel):
+    token : str = Field(default = None)
+    class Config:
+        the_schema = {
+            "test": {
+                "token":"123"
+
+            }
+
+        }
